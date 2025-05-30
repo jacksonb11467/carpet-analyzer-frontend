@@ -9,6 +9,7 @@ const CustomerForm = ({
   autocompleteRef, 
   mapRef, 
   isInitial = false,
+  isDropdown = false,  // New prop
   onCancel
 }) => {
   const [localDetails, setLocalDetails] = useState({...customerDetails});
@@ -28,7 +29,11 @@ const CustomerForm = ({
   };
 
   return (
-    <div style={!isInitial ? {
+    <div style={isDropdown ? {
+      // Dropdown mode styling - no background overlay
+      padding: '16px'
+    } : !isInitial ? {
+      // Modal overlay styling
       position: 'fixed',
       top: 0,
       left: 0,
@@ -41,6 +46,7 @@ const CustomerForm = ({
       zIndex: 1000,
       padding: '20px'
     } : { 
+      // Initial form styling
       minHeight: '100vh', 
       backgroundColor: '#f8fafc', 
       display: 'flex',
@@ -48,7 +54,13 @@ const CustomerForm = ({
       justifyContent: 'center',
       padding: '20px'
     }}>
-      <div style={{
+      <div style={isDropdown ? {
+        // Inner container for dropdown mode
+        width: '100%',
+        backgroundColor: 'white',
+        borderRadius: '8px'
+      } : {
+        // Inner container for modal/initial
         backgroundColor: 'white',
         borderRadius: '12px',
         padding: '40px',
@@ -61,7 +73,7 @@ const CustomerForm = ({
       }}>
         {!isInitial && (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: '600', color: '#1e293b', margin: 0 }}>
+            <h2 style={{ fontSize: isDropdown ? '20px' : '24px', fontWeight: '600', color: '#1e293b', margin: 0 }}>
               Edit Customer Details
             </h2>
             <button
@@ -75,7 +87,7 @@ const CustomerForm = ({
                 borderRadius: '4px'
               }}
             >
-              <X size={24} />
+              <X size={isDropdown ? 20 : 24} />
             </button>
           </div>
         )}
@@ -102,7 +114,7 @@ const CustomerForm = ({
         )}
 
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isDropdown ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '24px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '16px', fontWeight: '500', color: '#374151', marginBottom: '8px' }}>
                 Customer Name *
@@ -199,15 +211,18 @@ const CustomerForm = ({
                   onFocus={(e) => e.target.style.borderColor = '#2563eb'}
                   onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
                 />
-                <div 
-                  ref={mapRef}
-                  style={{
-                    width: '100%',
-                    height: '250px',
-                    borderRadius: '8px',
-                    border: '2px solid #e5e7eb'
-                  }}
-                />
+                {/* Only show map when NOT in dropdown mode */}
+                {!isDropdown && (
+                  <div 
+                    ref={mapRef}
+                    style={{
+                      width: '100%',
+                      height: '250px',
+                      borderRadius: '8px',
+                      border: '2px solid #e5e7eb'
+                    }}
+                  />
+                )}
               </div>
             ) : (
               <textarea
@@ -232,7 +247,7 @@ const CustomerForm = ({
             )}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isDropdown ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '16px', fontWeight: '500', color: '#374151', marginBottom: '8px' }}>
                 Preferred Install Date
@@ -284,10 +299,10 @@ const CustomerForm = ({
               width: '100%',
               backgroundColor: '#2563eb',
               color: 'white',
-              padding: '16px 24px',
+              padding: isDropdown ? '12px 20px' : '16px 24px',
               borderRadius: '8px',
               border: 'none',
-              fontSize: '18px',
+              fontSize: isDropdown ? '16px' : '18px',
               fontWeight: '600',
               cursor: 'pointer',
               transition: 'background-color 0.2s',

@@ -301,19 +301,34 @@ async function streamOpenAIResponse(formData, setStreamingOutput) {
     onLoad={initGoogleMaps}
     onError={() => setGoogleMapsError(true)} 
   />
-      {/* Customer edit overlay */}
-      {showCustomerEdit && (
-        <CustomerForm 
-          customerDetails={customerDetails}
-          setCustomerDetails={setCustomerDetails}
-          onSubmit={handleCustomerSubmit}
-          googleMapsError={googleMapsError}
-          autocompleteRef={autocompleteRef}
-          mapRef={mapRef}
-          isInitial={false}
-          onCancel={() => setShowCustomerEdit(false)}
-        />
-      )}
+{/* Customer edit dropdown */}
+{showCustomerEdit && (
+  <div style={{
+    position: 'fixed',
+    top: '80px',
+    right: '20px',
+    zIndex: 50,
+    width: '450px',
+    backgroundColor: 'white',
+    borderRadius: '12px',
+    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.15)',
+    border: '1px solid #e2e8f0',
+    maxHeight: 'calc(100vh - 100px)',
+    overflowY: 'auto'
+  }}>
+    <CustomerForm 
+      customerDetails={customerDetails}
+      setCustomerDetails={setCustomerDetails}
+      onSubmit={handleCustomerSubmit}
+      googleMapsError={googleMapsError}
+      autocompleteRef={autocompleteRef}
+      mapRef={mapRef}
+      isInitial={false}
+      isDropdown={true}
+      onCancel={() => setShowCustomerEdit(false)}
+    />
+  </div>
+)}
 
       {/* Floating Mini Logo - Always Visible on Sub Pages */}
 <div style={{
