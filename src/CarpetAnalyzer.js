@@ -77,16 +77,23 @@ const initGoogleMaps = () => {
   const newMap = new window.google.maps.Map(mapRef.current, mapOptions);
   setMap(newMap);
   
-  // Initialize autocomplete
+  // Initialize autocomplete with improved event handling
   if (autocompleteRef.current) {
     const autocomplete = new window.google.maps.places.Autocomplete(
       autocompleteRef.current,
-      { types: ['address'], componentRestrictions: { country: 'au' } }
+      { 
+        types: ['address'], 
+        componentRestrictions: { country: 'au' },
+        fields: ['formatted_address', 'geometry', 'name'] // Specify fields for better performance
+      }
     );
     
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
-      if (!place.geometry) return;
+      if (!place.geometry) {
+        console.warn("Place selection has no geometry data");
+        return;
+      }
       
       // Update map
       newMap.setCenter(place.geometry.location);
@@ -100,11 +107,13 @@ const initGoogleMaps = () => {
       });
       setMarker(newMarker);
       
-      // Update address
+      // Update address - ensure this runs properly
       if (place.formatted_address) {
+        const formattedAddress = place.formatted_address;
+        console.log("Selected address:", formattedAddress);
         setCustomerDetails(prev => ({
           ...prev,
-          address: place.formatted_address
+          address: formattedAddress
         }));
       }
     });
@@ -338,28 +347,23 @@ async function streamOpenAIResponse(formData, setStreamingOutput) {
   zIndex: 50,
   display: 'flex',
   alignItems: 'center',
-  gap: '8px',
-  padding: '10px 16px',
+  justifyContent: 'center',
+  padding: '12px',
   backgroundColor: 'white',
-  borderRadius: '8px',
+  borderRadius: '12px',
   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-  border: '1px solid #e2e8f0'
+  border: '1px solid #e2e8f0',
+  width: '72px',  // 3x larger
+  height: '72px'  // 3x larger
 }}>
   <img 
     src="/Main.png" 
     alt="Quotif Logo" 
     style={{ 
-      width: '24px', 
-      height: '24px'
+      width: '54px',  // 3x larger
+      height: '54px'  // 3x larger
     }} 
   />
-  <span style={{ 
-    fontWeight: '600', 
-    fontSize: '16px', 
-    color: '#334155' 
-  }}>
-    Quotif
-  </span>
 </div>
 
       {/* Floating Control Panel */}
@@ -559,13 +563,13 @@ async function streamOpenAIResponse(formData, setStreamingOutput) {
       border: '1px solid #e2e8f0'
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#1e293b', margin: 0 }}>
-          Room Analysis & Measurements
-        </h3>
-        <div style={{ fontSize: '14px', color: '#64748b' }}>
-          Method: {results.analysisMethod || 'AI Analysis'} • {results.rooms?.length || 0} rooms detected
-        </div>
-      </div>
+  <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#1e293b', margin: 0 }}>
+    Room Analysis & Measurements
+  </h3>
+  <div style={{ fontSize: '14px', color: '#64748b' }}>
+    {results.rooms?.length || 0} rooms detected
+  </div>
+</div>
       
       {/* Sort rooms to put carpetable rooms first */}
       {(() => {
