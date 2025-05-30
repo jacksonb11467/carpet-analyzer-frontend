@@ -6,6 +6,7 @@ import CustomerForm from './components/CustomerForm';
 import FloorPlanViewer from './components/FloorPlanViewer';
 import LoadingAnimation from './components/LoadingAnimation';
 import RoomCard from './components/RoomCard';
+import GoogleMapsLoader from './components/GoogleMapsLoader';
 import FloatingControlPanel from './components/FloatingControlPanel';
 import ManualRoomInput from './components/ManualRoomInput';
 
@@ -47,6 +48,53 @@ const CarpetAnalyzer = () => {
     setShowInitialForm(false);
     setShowCustomerEdit(false);
   };
+  // Add this function inside your CarpetAnalyzer component
+const initGoogleMaps = () => {
+  if (!window.google || !mapRef.current) return;
+  
+  // Initialize the map
+  const mapOptions = {
+    center: { lat: -27.4698, lng: 153.0251 }, // Brisbane center
+    zoom: 13,
+    mapTypeControl: false
+  };
+  
+  const newMap = new window.google.maps.Map(mapRef.current, mapOptions);
+  setMap(newMap);
+  
+  // Initialize autocomplete
+  if (autocompleteRef.current) {
+    const autocomplete = new window.google.maps.places.Autocomplete(
+      autocompleteRef.current,
+      { types: ['address'], componentRestrictions: { country: 'au' } }
+    );
+    
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (!place.geometry) return;
+      
+      // Update map
+      newMap.setCenter(place.geometry.location);
+      newMap.setZoom(17);
+      
+      // Add marker
+      if (marker) marker.setMap(null);
+      const newMarker = new window.google.maps.Marker({
+        map: newMap,
+        position: place.geometry.location
+      });
+      setMarker(newMarker);
+      
+      // Update address
+      if (place.formatted_address) {
+        setCustomerDetails(prev => ({
+          ...prev,
+          address: place.formatted_address
+        }));
+      }
+    });
+  }
+};
 
   // Toggle room expanded state
   const toggleRoomExpanded = (roomId) => {
@@ -233,6 +281,11 @@ async function streamOpenAIResponse(formData, setStreamingOutput) {
   // Main analysis interface
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+      {/* Add the GoogleMapsLoader component here */}
+  <GoogleMapsLoader 
+    onLoad={initGoogleMaps}
+    onError={() => setGoogleMapsError(true)} 
+  />
       {/* Customer edit overlay */}
       {showCustomerEdit && (
         <CustomerForm 
