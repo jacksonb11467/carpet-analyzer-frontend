@@ -100,7 +100,7 @@ const CustomerForm = ({
         alt="Quotif Logo" 
         style={{ 
           width: '240px', 
-          height: '240px'
+          height: 'auto'
         }} 
       />
     </div>
