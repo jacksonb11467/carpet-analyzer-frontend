@@ -17,7 +17,7 @@ const CarpetAnalyzer = () => {
     email: '',
     address: '',
     installDate: '',
-    notes: ''
+    notes: '',
     installer: ''
   });
   const [showCustomerEdit, setShowCustomerEdit] = useState(false);
