@@ -12,7 +12,10 @@ const CustomerForm = ({
   isDropdown = false,  // New prop
   onCancel
 }) => {
-  const [localDetails, setLocalDetails] = useState({...customerDetails});
+  const [localDetails, setLocalDetails] = useState({
+    ...customerDetails,
+    installer: customerDetails.installer || ''
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -92,28 +95,28 @@ const CustomerForm = ({
           </div>
         )}
 
-{isInitial && (
-  <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '16px' }}>
-      <img 
-        src="/FrontNewNew.png" 
-        alt="Quotif Logo" 
-        style={{ 
-          width: '240px', 
-          height: 'auto'
-        }} 
-      />
-    </div>
-<p style={{ 
-  color: '#64748b', 
-  fontSize: '18px', 
-  fontWeight: 'bold', // or '600' for semibold
-  margin: 0 
-}}>
-  Precision Carpet Quoting. Simplified.
-</p>
-  </div>
-)}
+        {isInitial && (
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '16px' }}>
+              <img 
+                src="/FrontNewNew.png" 
+                alt="Quotif Logo" 
+                style={{ 
+                  width: '240px', 
+                  height: 'auto'
+                }} 
+              />
+            </div>
+            <p style={{ 
+              color: '#64748b', 
+              fontSize: '18px', 
+              fontWeight: 'bold', // or '600' for semibold
+              margin: 0 
+            }}>
+              Precision Carpet Quoting. Simplified.
+            </p>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
           <div style={{ display: 'grid', gridTemplateColumns: isDropdown ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '24px' }}>
@@ -293,6 +296,59 @@ const CustomerForm = ({
                 placeholder="Special requirements..."
               />
             </div>
+          </div>
+
+          {/* Installer Selection Section */}
+          <div style={{ 
+            marginTop: '24px',
+            marginBottom: '32px',
+            padding: '24px',
+            backgroundColor: '#f8fafc',
+            borderRadius: '12px',
+            border: '1px solid #e2e8f0'
+          }}>
+            <h3 style={{ 
+              fontSize: '18px', 
+              fontWeight: '600', 
+              color: '#1e293b', 
+              marginBottom: '16px' 
+            }}>
+              Select Installer
+            </h3>
+            
+            <select
+              value={localDetails.installer || ''}
+              onChange={(e) => setLocalDetails(prev => ({ ...prev, installer: e.target.value }))}
+              style={{
+                width: '100%',
+                padding: '14px 16px',
+                border: '2px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '16px',
+                backgroundColor: 'white',
+                color: '#1e293b',
+                transition: 'border-color 0.2s',
+                boxSizing: 'border-box'
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#2563eb'}
+              onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+            >
+              <option value="" disabled>Select an installer...</option>
+              <option value="michael_smith">Michael Smith</option>
+              <option value="james_wilson">James Wilson</option>
+              <option value="sarah_johnson">Sarah Johnson</option>
+              <option value="david_thompson">David Thompson</option>
+              <option value="emma_rogers">Emma Rogers</option>
+              <option value="robert_mitchell">Robert Mitchell</option>
+            </select>
+            
+            <p style={{ 
+              fontSize: '14px', 
+              color: '#64748b', 
+              marginTop: '12px' 
+            }}>
+              The installer will be responsible for measuring and installing the carpet.
+            </p>
           </div>
 
           <button

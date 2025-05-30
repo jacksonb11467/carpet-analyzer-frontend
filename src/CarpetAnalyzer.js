@@ -18,6 +18,7 @@ const CarpetAnalyzer = () => {
     address: '',
     installDate: '',
     notes: ''
+    installer: ''
   });
   const [showCustomerEdit, setShowCustomerEdit] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
@@ -377,9 +378,10 @@ async function streamOpenAIResponse(formData, setStreamingOutput) {
               <h1 style={{ fontSize: '20px', fontWeight: 'bold', color: '#1e293b', margin: 0 }}>
                 Quotif Carpet
               </h1>
-              <div style={{ fontSize: '14px', color: '#64748b' }}>
-                {customerDetails.name} • {customerDetails.phone} • {customerDetails.address}
-              </div>
+<div style={{ fontSize: '14px', color: '#64748b' }}>
+  {customerDetails.name} • {customerDetails.phone} • {customerDetails.address}
+  {customerDetails.installer && ` • Installer: ${customerDetails.installer.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}`}
+</div>
             </div>
           </div>
           <button
