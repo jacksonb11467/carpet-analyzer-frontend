@@ -316,26 +316,36 @@ async function streamOpenAIResponse(formData, setStreamingOutput) {
       )}
 
       {/* Floating Mini Logo - Always Visible on Sub Pages */}
-      <div style={{
-        position: 'fixed',
-        top: '20px',
-        left: '20px',
-        zIndex: 50,
-        backgroundColor: 'white',
-        borderRadius: '12px',
-        padding: '12px',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-        border: '1px solid #e2e8f0'
-      }}>
-        <img 
-          src="/LittleOne.png" 
-          alt="Quotif Logo" 
-          style={{ 
-            width: '24px', 
-            height: '24px'
-          }} 
-        />
-      </div>
+<div style={{
+  position: 'fixed',
+  top: '20px',
+  left: '20px',
+  zIndex: 50,
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
+  padding: '10px 16px',
+  backgroundColor: 'white',
+  borderRadius: '8px',
+  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+  border: '1px solid #e2e8f0'
+}}>
+  <img 
+    src="/Main.png" 
+    alt="Quotif Logo" 
+    style={{ 
+      width: '24px', 
+      height: '24px'
+    }} 
+  />
+  <span style={{ 
+    fontWeight: '600', 
+    fontSize: '16px', 
+    color: '#334155' 
+  }}>
+    Quotif
+  </span>
+</div>
 
       {/* Floating Control Panel */}
       {results && <FloatingControlPanel undoStack={undoStack} onUndo={handleUndo} />}
