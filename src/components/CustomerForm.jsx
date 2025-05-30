@@ -96,7 +96,7 @@ const CustomerForm = ({
   <div style={{ textAlign: 'center', marginBottom: '40px' }}>
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '16px' }}>
       <img 
-        src="/Main.png" 
+        src="/FrontNew.png" 
         alt="Quotif Logo" 
         style={{ 
           width: '120px', 
@@ -105,7 +105,7 @@ const CustomerForm = ({
       />
     </div>
     <p style={{ color: '#64748b', fontSize: '18px', margin: 0 }}>
-      Specicalist Carpet Tool
+      Precision Carpet Quoting. Simplified.
     </p>
   </div>
 )}
