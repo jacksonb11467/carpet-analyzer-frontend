@@ -1,23 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const LoadingAnimation = ({ progress }) => {
-  const [currentStep, setCurrentStep] = useState('Preparing analysis...');
-  
-  // Update the current step based on progress
-  useEffect(() => {
-    if (progress < 20) {
-      setCurrentStep('Reading floor plan...');
-    } else if (progress < 40) {
-      setCurrentStep('Identifying rooms and spaces...');
-    } else if (progress < 60) {
-      setCurrentStep('Calculating measurements...');
-    } else if (progress < 80) {
-      setCurrentStep('Determining carpet requirements...');
-    } else {
-      setCurrentStep('Finalizing results...');
-    }
-  }, [progress]);
-
   return (
     <div style={{
       display: 'flex',
@@ -30,7 +13,6 @@ const LoadingAnimation = ({ progress }) => {
     }}>
       {/* Carpet roll animation container */}
       <div style={{
-        marginBottom: '40px',
         position: 'relative',
         width: '160px',
         height: '160px',
@@ -50,67 +32,30 @@ const LoadingAnimation = ({ progress }) => {
           alignItems: 'center',
           justifyContent: 'center',
           boxShadow: '0 10px 25px rgba(59, 130, 246, 0.2)'
-        }}>
-          {/* Inner circle (carpet roll center) */}
-          <div style={{
-            width: '120px',
-            height: '120px',
-            borderRadius: '50%',
-            background: 'white',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            {/* Logo */}
-            <img 
-              src="/Main.png" 
-              alt="Quotif Logo" 
-              style={{
-                width: '80px',
-                height: '80px'
-              }}
-            />
-          </div>
-        </div>
-      </div>
-      
-      {/* Current operation text */}
-      <div style={{
-        fontSize: '18px',
-        fontWeight: '500',
-        color: '#1e293b',
-        marginBottom: '20px',
-        textAlign: 'center'
-      }}>
-        {currentStep}
-      </div>
-      
-      {/* Progress bar container */}
-      <div style={{
-        width: '300px',
-        height: '8px',
-        backgroundColor: '#e2e8f0',
-        borderRadius: '4px',
-        overflow: 'hidden',
-        marginBottom: '16px'
-      }}>
-        {/* Actual progress bar */}
-        <div style={{
-          height: '100%',
-          width: `${progress}%`,
-          backgroundColor: '#3b82f6',
-          borderRadius: '4px',
-          transition: 'width 0.5s ease-out'
         }} />
-      </div>
-      
-      {/* Progress percentage */}
-      <div style={{
-        fontSize: '16px',
-        fontWeight: '600',
-        color: '#64748b'
-      }}>
-        {Math.round(progress)}% Complete
+        
+        {/* Inner circle (carpet roll center) - stationary */}
+        <div style={{
+          position: 'relative', // Changed to relative to not be affected by parent's animation
+          width: '120px',
+          height: '120px',
+          borderRadius: '50%',
+          background: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 2 // Ensure it's above the spinning background
+        }}>
+          {/* Logo - stationary */}
+          <img 
+            src="/Main.png" 
+            alt="Quotif Logo" 
+            style={{
+              width: '80px',
+              height: '80px'
+            }}
+          />
+        </div>
       </div>
       
       {/* Animation keyframes */}
