@@ -99,14 +99,19 @@ const CustomerForm = ({
         src="/FrontNew.png" 
         alt="Quotif Logo" 
         style={{ 
-          width: '120px', 
-          height: '120px'
+          width: '240px', 
+          height: '240px'
         }} 
       />
     </div>
-    <p style={{ color: '#64748b', fontSize: '18px', margin: 0 }}>
-      Precision Carpet Quoting. Simplified.
-    </p>
+<p style={{ 
+  color: '#64748b', 
+  fontSize: '18px', 
+  fontWeight: 'bold', // or '600' for semibold
+  margin: 0 
+}}>
+  Precision Carpet Quoting. Simplified.
+</p>
   </div>
 )}
 
