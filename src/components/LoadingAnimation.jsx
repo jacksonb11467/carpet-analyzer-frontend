@@ -48,7 +48,7 @@ const LoadingAnimation = ({ progress }) => {
         }}>
           {/* Logo - stationary */}
           <img 
-            src="/Main.png" 
+            src="/LittleOne.png" 
             alt="Quotif Logo" 
             style={{
               width: '80px',
