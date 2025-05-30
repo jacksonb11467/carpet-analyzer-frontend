@@ -552,55 +552,69 @@ async function streamOpenAIResponse(formData, setStreamingOutput) {
             )}
 
             {/* Condensed Room Details */}
-            <div style={{
-              backgroundColor: 'white',
-              borderRadius: '12px',
-              padding: '24px',
-              border: '1px solid #e2e8f0'
+    <div style={{
+      backgroundColor: 'white',
+      borderRadius: '12px',
+      padding: '24px',
+      border: '1px solid #e2e8f0'
+    }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#1e293b', margin: 0 }}>
+          Room Analysis & Measurements
+        </h3>
+        <div style={{ fontSize: '14px', color: '#64748b' }}>
+          Method: {results.analysisMethod || 'AI Analysis'} • {results.rooms?.length || 0} rooms detected
+        </div>
+      </div>
+      
+      {/* Sort rooms to put carpetable rooms first */}
+      {(() => {
+        const sortedRooms = [...results.rooms].sort((a, b) => {
+          if (a.carpetable && !b.carpetable) return -1;
+          if (!a.carpetable && b.carpetable) return 1;
+          return 0;
+        });
+        
+        return (
+          <>
+            {/* Table Header */}
+            <div style={{ 
+              padding: '12px 16px', 
+              backgroundColor: '#f8fafc',
+              borderBottom: '1px solid #e5e7eb',
+              display: 'grid', 
+              gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 40px', 
+              fontSize: '12px',
+              fontWeight: '600',
+              color: '#374151',
+              borderRadius: '8px 8px 0 0'
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#1e293b', margin: 0 }}>
-                  Room Analysis & Measurements
-                </h3>
-                <div style={{ fontSize: '14px', color: '#64748b' }}>
-                  Method: {results.analysisMethod || 'AI Analysis'} • {results.rooms?.length || 0} rooms detected
-                </div>
-              </div>
-              
-              {/* Table Header */}
-              <div style={{ 
-                padding: '12px 16px', 
-                backgroundColor: '#f8fafc',
-                borderBottom: '1px solid #e5e7eb',
-                display: 'grid', 
-                gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 40px', 
-                fontSize: '12px',
-                fontWeight: '600',
-                color: '#374151',
-                borderRadius: '8px 8px 0 0'
-              }}>
-                <div>Room</div>
-                <div>Dimensions</div>
-                <div>Total Area</div>
-                <div>Carpet Area</div>
-                <div>Linear Metres</div>
-                <div></div>
-              </div>
-              
-              {/* Room Rows */}
-              {results.rooms?.map((room, index) => (
-                <RoomCard 
-                  key={room.id} 
-                  room={room} 
-                  index={index} 
-                  isExpanded={expandedRooms[room.id]}
-                  toggleExpanded={() => toggleRoomExpanded(room.id)}
-                  updateDimensions={updateRoomDimensions}
-                />
-              ))}
+              <div>Room</div>
+              <div>Dimensions</div>
+              <div>Total Area</div>
+              <div>Carpet Area</div>
+              <div>Linear Metres</div>
+              <div>Carpetable?</div>
+              <div></div>
             </div>
-          </div>
-        )}
+            
+            {/* Room Rows */}
+            {sortedRooms.map((room, index) => (
+              <RoomCard 
+                key={room.id} 
+                room={room} 
+                index={index} 
+                isExpanded={expandedRooms[room.id]}
+                toggleExpanded={() => toggleRoomExpanded(room.id)}
+                updateDimensions={updateRoomDimensions}
+              />
+            ))}
+          </>
+        );
+      })()}
+    </div>
+  </div>
+)}
       </div>
     </div>
   );

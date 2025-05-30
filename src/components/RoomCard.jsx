@@ -31,7 +31,7 @@ const RoomCard = ({ room, index, isExpanded, toggleExpanded, updateDimensions })
       <div style={{ 
         padding: '12px 16px', 
         display: 'grid', 
-        gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 40px', 
+        gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 40px', // Added column for carpetable
         alignItems: 'center',
         fontSize: '14px',
         borderBottom: isExpanded ? '1px solid #e5e7eb' : 'none'
@@ -44,16 +44,6 @@ const RoomCard = ({ room, index, isExpanded, toggleExpanded, updateDimensions })
             borderRadius: '3px'
           }} />
           <span style={{ fontWeight: '600' }}>{room.name || 'Unknown Room'}</span>
-          <span style={{
-            padding: '2px 6px',
-            borderRadius: '4px',
-            fontSize: '11px',
-            fontWeight: '500',
-            backgroundColor: room.carpetable ? '#dcfce7' : '#fee2e2',
-            color: room.carpetable ? '#166534' : '#991b1b'
-          }}>
-            {room.carpetable ? 'Yes' : 'No'}
-          </span>
         </div>
         <div>{safeDimensions.length.toFixed(1)}×{safeDimensions.width.toFixed(1)}m</div>
         <div>{safeArea.toFixed(1)}m²</div>
@@ -62,6 +52,20 @@ const RoomCard = ({ room, index, isExpanded, toggleExpanded, updateDimensions })
         </div>
         <div style={{ fontWeight: room.carpetable ? '600' : 'normal', color: room.carpetable ? '#2563eb' : '#6b7280' }}>
           {room.carpetable ? `${linearMetres.toFixed(1)}m` : '—'}
+        </div>
+        {/* New Carpetable column */}
+        <div style={{ textAlign: 'center' }}>
+          <span style={{
+            display: 'inline-block',
+            padding: '4px 8px',
+            borderRadius: '4px',
+            fontSize: '12px',
+            fontWeight: '500',
+            backgroundColor: room.carpetable ? '#dcfce7' : '#fee2e2',
+            color: room.carpetable ? '#166534' : '#991b1b'
+          }}>
+            {room.carpetable ? 'Yes' : 'No'}
+          </span>
         </div>
         <button 
           onClick={toggleExpanded}
