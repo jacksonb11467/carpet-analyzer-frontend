@@ -42,6 +42,21 @@ const CarpetAnalyzer = () => {
   const [marker, setMarker] = useState(null);
   const [googleMapsError, setGoogleMapsError] = useState(false);
 
+  // Add this useEffect hook to initialize Google Maps
+useEffect(() => {
+  // This will check if Google Maps is loaded and initialize it
+  const checkGoogleMapsAndInit = () => {
+    if (window.google && window.google.maps) {
+      initGoogleMaps();
+    } else {
+      // If not loaded yet, check again in 100ms
+      setTimeout(checkGoogleMapsAndInit, 100);
+    }
+  };
+  
+  checkGoogleMapsAndInit();
+}, []);  // Empty dependency array means this runs once on component mount
+
   // Callback for CustomerForm component
   const handleCustomerSubmit = (details) => {
     setCustomerDetails(details);
