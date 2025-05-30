@@ -92,26 +92,23 @@ const CustomerForm = ({
           </div>
         )}
 
-        {isInitial && (
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-              <img 
-                src="/LittleOne.png" 
-                alt="Quotif Logo" 
-                style={{ 
-                  width: '32px', 
-                  height: '32px'
-                }} 
-              />
-              <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: '#1e293b', margin: 0 }}>
-                Quotif Carpet
-              </h1>
-            </div>
-            <p style={{ color: '#64748b', fontSize: '18px', margin: 0 }}>
-              Professional carpet installation quoting tool
-            </p>
-          </div>
-        )}
+{isInitial && (
+  <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '16px' }}>
+      <img 
+        src="/Main.png" 
+        alt="Quotif Logo" 
+        style={{ 
+          width: '120px', 
+          height: '120px'
+        }} 
+      />
+    </div>
+    <p style={{ color: '#64748b', fontSize: '18px', margin: 0 }}>
+      Specicalist Carpet Tool
+    </p>
+  </div>
+)}
 
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
           <div style={{ display: 'grid', gridTemplateColumns: isDropdown ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '24px' }}>
