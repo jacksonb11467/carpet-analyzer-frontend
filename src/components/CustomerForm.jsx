@@ -96,7 +96,7 @@ const CustomerForm = ({
   <div style={{ textAlign: 'center', marginBottom: '40px' }}>
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '16px' }}>
       <img 
-        src="/FrontNew.png" 
+        src="/FrontNewNew.png" 
         alt="Quotif Logo" 
         style={{ 
           width: '240px', 
